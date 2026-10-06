@@ -94,11 +94,21 @@ function setOnTop(v) {
   if (win) win.webContents.send('kumo:ontop', alwaysOnTop);
 }
 function createTray() {
-  const img = nativeImage.createFromPath(path.join(__dirname, 'assets', 'trayTemplate.png'));
+  const imgPath = path.join(__dirname, 'assets', 'trayTemplate.png');
+  console.log('[kumo] Creating tray icon from:', imgPath);
+  const img = nativeImage.createFromPath(imgPath);
+  if (img.isEmpty()) {
+    console.error('[kumo] Failed to load tray icon!');
+    return;
+  }
   img.setTemplateImage(true);
   tray = new Tray(img);
   tray.setToolTip('Kumo');
   refreshMenu();
+  console.log('[kumo] Tray created successfully');
+
+  // Verhindere dass Tray destroyed wird
+  tray.on('click', toggleWindow);
 }
 
 /* ---------- IPC ---------- */
@@ -111,7 +121,12 @@ ipcMain.on('kumo:notify', (_e, { title, body }) => {
 ipcMain.on('kumo:tray-title', (_e, t) => { if (tray && process.platform === 'darwin') tray.setTitle(t || ''); });
 ipcMain.on('kumo:pomo-label', (_e, t) => { pomoLabel = t; refreshMenu(); });
 ipcMain.on('kumo:set-ontop', (_e, v) => setOnTop(v));
-ipcMain.on('kumo:hide', () => win && win.hide());
+ipcMain.on('kumo:hide', () => {
+  if (!win) return;
+  console.log('[kumo] Hide requested');
+  win.hide();
+  console.log('[kumo] Window hidden, isDestroyed:', win.isDestroyed());
+});
 ipcMain.handle('kumo:get-ontop', () => alwaysOnTop);
 
 /* ---------- Start ---------- */
@@ -126,4 +141,8 @@ else {
     app.on('activate', () => { if (win) win.show(); });
   });
   app.on('before-quit', () => { app.isQuitting = true; saveBounds(); });
+  app.on('window-all-closed', () => {
+    // NICHT beenden - App läuft über Tray weiter
+    // Nur beenden wenn explizit "Kumo beenden" im Menü gewählt wird
+  });
 }

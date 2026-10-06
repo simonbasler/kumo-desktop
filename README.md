@@ -2,7 +2,7 @@
 
 Ein kleines Wolkenschaf, das über deinem Desktop schwebt. Jede Mausbewegung zählt als Schritt, dazu gibt es einen Pomodoro-Timer und eine Pausen-Erinnerung.
 
-![Kumo Screenshot](screenshots/kumo-main.png)
+![Kumo Screenshot](screenshots/kumo_haupt.png)
 *Kumo schwebt über deinem Desktop und zählt deine Mausbewegungen als Schritte*
 
 ## 📥 Download
@@ -16,11 +16,11 @@ Ein kleines Wolkenschaf, das über deinem Desktop schwebt. Jede Mausbewegung zä
 
 ## Screenshots
 
-| Hauptansicht | Pomodoro-Timer | Einstellungen |
-|--------------|----------------|---------------|
-| ![Main](screenshots/kumo-main.png) | ![Pomodoro](screenshots/kumo-pomodoro.png) | ![Settings](screenshots/kumo-settings.png) |
+| Hauptansicht | Schritte | Beziehung | Pomodoro |
+|--------------|----------|-----------|----------|
+| ![Haupt](screenshots/kumo_haupt.png) | ![Schritte](screenshots/kumo-schritte.png) | ![Beziehung](screenshots/kumo-beziehung.png) | ![Pomodoro](screenshots/kumo-pomodoro.png) |
 
-*Screenshots bitte in `screenshots/` Ordner ablegen*
+*Einstellungen-Screenshot folgt noch*
 
 ## 🎮 Steuerung & Bedienung
 

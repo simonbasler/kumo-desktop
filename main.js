@@ -47,7 +47,17 @@ function createWindow() {
   win.setVisibleOnAllWorkspaces(true, { visibleOnFullScreen: true });
   win.loadFile(path.join(__dirname, 'renderer', 'index.html'));
   win.on('moved', saveBounds);
-  win.on('close', (e) => { if (!app.isQuitting) { e.preventDefault(); win.hide(); } });
+
+  // KRITISCH: Verhindere dass Fenster geschlossen wird (nur verstecken!)
+  win.on('close', (e) => {
+    console.log('[kumo] close event, isQuitting:', app.isQuitting);
+    if (!app.isQuitting) {
+      e.preventDefault();
+      win.hide();
+      console.log('[kumo] Window hidden instead of closed');
+      return false;
+    }
+  });
 }
 
 /* ---------- Maus-Tracking ---------- */
@@ -136,8 +146,15 @@ ipcMain.handle('kumo:get-ontop', () => alwaysOnTop);
 if (!app.requestSingleInstanceLock()) { app.quit(); }
 else {
   app.on('second-instance', () => { if (win) { win.show(); win.focus(); } });
+
   app.whenReady().then(() => {
     app.setName('Kumo');
+
+    // macOS: Verhindere Auto-Quit
+    if (process.platform === 'darwin') {
+      app.dock.show(); // Zeige Dock-Icon explizit
+    }
+
     createWindow();
     createTray();
     startTracking();

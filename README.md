@@ -59,12 +59,12 @@ Drücke **C** um durch diese Ansichten zu wechseln:
 
 Von links nach rechts:
 
-| Button | Icon | Funktion |
-|--------|------|----------|
-| **Pomodoro** | 🍅 | Wechselt direkt zur Pomodoro-Ansicht |
-| **Pin** | 📌 | Fenster immer im Vordergrund halten |
-| **Einstellungen** | ⚙️ | Öffnet Einstellungs-Dialog |
-| **Verstecken** | 👁️ | Blendet Fenster aus |
+| Position | Button | Funktion |
+|----------|--------|----------|
+| 1 | **Pomodoro** (Play-Symbol) | Wechselt direkt zur Pomodoro-Ansicht |
+| 2 | **Pin** (Reißzwecke) | Fenster immer im Vordergrund halten |
+| 3 | **Einstellungen** (Zahnrad) | Öffnet Einstellungs-Dialog |
+| 4 | **Verstecken** (Auge) | Blendet Fenster aus |
 
 ### Fenster bewegen
 

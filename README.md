@@ -3,7 +3,8 @@
 Ein kleines Wolkenschaf, das über deinem Desktop schwebt. Jede Mausbewegung zählt als Schritt, dazu gibt es einen Pomodoro-Timer und eine Pausen-Erinnerung.
 
 ![Kumo Screenshot](screenshots/kumo_haupt.png)
-*Kumo schwebt über deinem Desktop und zählt deine Mausbewegungen als Schritte*
+
+*Dein Desktop-Begleiter – zählt Mausbewegungen als Schritte*
 
 ## 📥 Download
 

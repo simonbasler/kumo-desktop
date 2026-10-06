@@ -2,7 +2,27 @@
 
 Ein kleines Wolkenschaf, das über deinem Desktop schwebt. Jede Mausbewegung zählt als Schritt, dazu gibt es einen Pomodoro-Timer und eine Pausen-Erinnerung.
 
-## Starten (Mac)
+![Kumo Screenshot](screenshots/kumo-main.png)
+*Kumo schwebt über deinem Desktop und zählt deine Mausbewegungen als Schritte*
+
+## 📥 Download
+
+**[→ Releases herunterladen](https://github.com/simonbasler/kumo-desktop/releases)**
+
+- **Apple Silicon (M1/M2/M3)**: `Kumo-1.0.0-arm64.dmg`
+- **Intel Macs**: `Kumo-1.0.0.dmg`
+
+**Installation**: DMG öffnen → Kumo in Programme-Ordner ziehen → Beim ersten Start: Rechtsklick → Öffnen
+
+## Screenshots
+
+| Hauptansicht | Pomodoro-Timer | Einstellungen |
+|--------------|----------------|---------------|
+| ![Main](screenshots/kumo-main.png) | ![Pomodoro](screenshots/kumo-pomodoro.png) | ![Settings](screenshots/kumo-settings.png) |
+
+*Screenshots bitte in `screenshots/` Ordner ablegen*
+
+## 🚀 Entwicklung (Mac)
 
 Voraussetzung: Node.js ab Version 20 (`node -v` im Terminal).
 

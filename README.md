@@ -22,6 +22,55 @@ Ein kleines Wolkenschaf, das über deinem Desktop schwebt. Jede Mausbewegung zä
 
 *Screenshots bitte in `screenshots/` Ordner ablegen*
 
+## 🎮 Steuerung & Bedienung
+
+### Tastatur-Steuerung
+
+**Hardware-Tasten (immer aktiv):**
+| Taste | Aktion |
+|-------|--------|
+| **A** | Streicheln / Pomodoro starten oder pausieren |
+| **B** | Kumo rufen / Pomodoro zurücksetzen |
+| **C** | Ansicht wechseln (zyklisch) |
+
+**Software-Tasten (nur wenn Fenster aktiv):**
+| Taste | Entspricht |
+|-------|------------|
+| **A** | Hardware-Taste A |
+| **S** | Hardware-Taste B |
+| **D** | Hardware-Taste C |
+
+### Ansichten-Zyklus (Taste C)
+
+Drücke **C** um durch diese Ansichten zu wechseln:
+1. **Kumo** - Hauptansicht mit dem Schaf
+2. **Schritte** - Schrittzähler-Ansicht
+3. **Freundschaft** - Freundschafts-Level
+4. **Pomodoro** - Pomodoro-Timer
+5. → zurück zu Kumo
+
+### Kontrollleiste (unten im Fenster)
+
+Von links nach rechts:
+
+| Button | Icon | Funktion |
+|--------|------|----------|
+| **Pomodoro** | 🍅 | Wechselt direkt zur Pomodoro-Ansicht |
+| **Pin** | 📌 | Fenster immer im Vordergrund halten |
+| **Einstellungen** | ⚙️ | Öffnet Einstellungs-Dialog |
+| **Verstecken** | 👁️ | Blendet Fenster aus |
+
+### Fenster bewegen
+
+- **Klicken & Ziehen**: Fenster an beliebiger Stelle greifen und verschieben
+- Kumo bleibt an der Position, wo du es ablegst
+
+### Menüleiste
+
+Das Kumo-Symbol in der macOS-Menüleiste:
+- Zeigt **Restzeit** während eines laufenden Pomodoros
+- **Rechtsklick** öffnet Kontextmenü mit zusätzlichen Optionen
+
 ## 🚀 Entwicklung (Mac)
 
 Voraussetzung: Node.js ab Version 20 (`node -v` im Terminal).
@@ -40,19 +89,9 @@ npm run dist
 
 Danach liegt in `dist/` eine `Kumo-1.0.0-arm64.dmg` (Apple Silicon) und eine x64-Variante. Öffnen, Kumo in den Programme-Ordner ziehen, fertig. Die App ist nur ad-hoc signiert. Weil du sie selbst gebaut hast, startet sie trotzdem ohne Warnung. Gibst du sie weiter, muss der Empfänger beim ersten Start Rechtsklick → Öffnen wählen.
 
-Tipp: Unter Systemeinstellungen → Allgemein → Anmeldeobjekte kannst du Kumo beim Login starten lassen.
+**Tipp:** Unter Systemeinstellungen → Allgemein → Anmeldeobjekte kannst du Kumo beim Login starten lassen.
 
-## Bedienung
-
-| Taste | Startansicht | Pomodoro-Ansicht |
-|---|---|---|
-| **A** | Streicheln | Start / Pause |
-| **B** | Rufen | Zurücksetzen |
-| **C** | Ansicht wechseln: Kumo → Schritte → Freundschaft → Pomodoro | |
-
-Wenn das Fenster aktiv ist, gehen auch die Tasten A, S und D. Du kannst das Gerät überall greifen und verschieben. Die Leiste darunter hat vier Knöpfe: Pomodoro, Immer im Vordergrund, Einstellungen und Verstecken. Das Symbol in der Menüleiste zeigt beim laufenden Pomodoro die Restzeit an und hat ein eigenes Menü.
-
-## So funktioniert's
+## ⚙️ So funktioniert's
 
 - **Schritte:** Der Hauptprozess fragt alle 40 ms die Mausposition ab (`screen.getCursorScreenPoint`). Alle 400 px Mausweg (einstellbar) gibt es einen Schritt. Sprünge über 800 px, etwa beim Wechsel des Bildschirms, werden ignoriert. Dafür braucht es keine Bedienungshilfen-Rechte.
 - **Pausen-Erinnerung:** Nutzt die Leerlaufzeit des Systems, also Maus *und* Tastatur. Nach 50 Minuten Aktivität ohne 5 Minuten Ruhe gibt es eine Mitteilung. Machst du dann Pause, freut sich Kumo. Ignorierst du die Erinnerung mehrmals, sinkt seine Laune. Während ein Pomodoro läuft, übernimmt der Timer die Pausen.

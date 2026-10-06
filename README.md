@@ -17,9 +17,14 @@ Ein kleines Wolkenschaf, das über deinem Desktop schwebt. Jede Mausbewegung zä
 
 ## Screenshots
 
-| Hauptansicht | Schritte | Beziehung | Pomodoro |
-|--------------|----------|-----------|----------|
-| ![Haupt](screenshots/kumo_haupt.png) | ![Schritte](screenshots/kumo-schritte.png) | ![Beziehung](screenshots/kumo-beziehung.png) | ![Pomodoro](screenshots/kumo-pomodoro.png) |
+<table>
+<tr>
+<td width="25%"><img src="screenshots/kumo_haupt.png" alt="Hauptansicht"><br><b>Hauptansicht</b></td>
+<td width="25%"><img src="screenshots/kumo-schritte.png" alt="Schritte"><br><b>Schritte</b></td>
+<td width="25%"><img src="screenshots/kumo-beziehung.png" alt="Beziehung"><br><b>Beziehung</b></td>
+<td width="25%"><img src="screenshots/kumo-pomodoro.png" alt="Pomodoro"><br><b>Pomodoro</b></td>
+</tr>
+</table>
 
 *Einstellungen-Screenshot folgt noch*
 

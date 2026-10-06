@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:">
+<title>Kumo</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app">
+    <div class="device" id="device">
+      <div class="clip"></div>
+      <div class="innards" aria-hidden="true"><i class="pcb"></i><i class="cell"></i><i class="chip"></i><i class="chip b"></i><i class="screw s1"></i><i class="screw s2"></i><i class="screw s3"></i><i class="screw s4"></i></div>
+      <div class="led" id="led" aria-hidden="true"></div>
+      <div class="bezel">
+        <span class="brand">KUMO</span>
+        <div class="glass"><canvas id="lcd" width="64" height="48" role="img" aria-label="Kumo-Bildschirm"></canvas></div>
+        <span class="sub">STEP PAL</span>
+      </div>
+      <div class="pads">
+        <button class="pb" id="bA" title="A: Streicheln / Start" aria-label="A">A</button>
+        <button class="pb" id="bB" title="B: Rufen / Stopp" aria-label="B">B</button>
+        <button class="pb" id="bC" title="C: Ansicht wechseln" aria-label="C">C</button>
+      </div>
+    </div>
+
+    <p class="say" id="say" aria-live="polite">Hallo! Das ist Kumo.</p>
+
+    <nav class="bar">
+      <button class="ib" id="tbPomo" title="Pomodoro starten oder pausieren">
+        <svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M8 9V6M6 1.5h4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      </button>
+      <button class="ib" id="tbPin" title="Immer im Vordergrund">
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5 2h6l-1 4 2.5 2.5h-9L6 6z M8 8.5V14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg>
+      </button>
+      <button class="ib" id="tbSet" title="Einstellungen">
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 4.5h7M12 4.5h2M2 11.5h2M7 11.5h7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="10.5" cy="4.5" r="1.6" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="5.5" cy="11.5" r="1.6" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+      </button>
+      <button class="ib" id="tbHide" title="In die Menüleiste verstecken">
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8h9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      </button>
+    </nav>
+
+    <section class="sheet" id="sheet" hidden aria-label="Einstellungen">
+      <header><h2>Einstellungen</h2><button class="ib" id="sheetClose" title="Schließen"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></button></header>
+      <div class="scroll">
+        <h3>Pomodoro</h3>
+        <label class="f"><span>Fokus</span><input type="number" id="setFocus" min="5" max="90" step="5"><em>Min.</em></label>
+        <label class="f"><span>Kurze Pause</span><input type="number" id="setShort" min="1" max="30"><em>Min.</em></label>
+        <label class="f"><span>Lange Pause</span><input type="number" id="setLong" min="5" max="60" step="5"><em>Min.</em></label>
+        <label class="f"><span>Lange Pause nach</span><input type="number" id="setEvery" min="2" max="8"><em>Runden</em></label>
+        <h3>Pausen-Erinnerung</h3>
+        <label class="f"><span>Erinnern nach</span><input type="number" id="setRemind" min="15" max="180" step="5"><em>Min. aktiv</em></label>
+        <label class="f"><span>Als Pause zählt</span><input type="number" id="setBreak" min="2" max="30"><em>Min. Ruhe</em></label>
+        <h3>Schritte</h3>
+        <label class="f"><span>Mausweg pro Schritt</span>
+          <select id="setPx"><option value="250">kurz (250 px)</option><option value="400">normal (400 px)</option><option value="700">lang (700 px)</option></select></label>
+        <h3>Sonstiges</h3>
+        <label class="c"><input type="checkbox" id="setSound"> Töne am Gerät</label>
+        <label class="c"><input type="checkbox" id="setNotify"> macOS-Mitteilungen</label>
+        <div id="resetBox"><button class="btn" id="resetBtn">Neu anfangen</button></div>
+        <p class="stats" id="statsLine"></p>
+      </div>
+    </section>
+  </div>
+<script src="app.js"></script>
+</body>
+</html>

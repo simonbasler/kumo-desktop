@@ -1,0 +1,29 @@
+{
+  "name": "kumo-desktop",
+  "productName": "Kumo",
+  "version": "1.0.0",
+  "description": "Kleiner Desktop-Begleiter, der Mauswege als Schritte zählt – mit Pomodoro-Timer und Pausen-Erinnerung.",
+  "main": "main.js",
+  "author": "Simon Basler",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder --mac"
+  },
+  "devDependencies": {
+    "electron": "44.5.1",
+    "electron-builder": "26.15.3"
+  },
+  "build": {
+    "appId": "de.simonbasler.kumo",
+    "productName": "Kumo",
+    "files": ["main.js", "preload.js", "renderer/**", "assets/**"],
+    "mac": {
+      "category": "public.app-category.productivity",
+      "icon": "build/icon.png",
+      "target": [{ "target": "dmg", "arch": ["arm64", "x64"] }],
+      "identity": "-",
+      "extendInfo": { "LSUIElement": false }
+    }
+  }
+}

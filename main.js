@@ -9,6 +9,9 @@ let tray = null;
 let alwaysOnTop = true;
 let pomoLabel = 'Pomodoro starten';
 
+// Verhindere App-Beendigung außer wenn explizit gewollt
+app.isQuitting = false;
+
 const boundsFile = () => path.join(app.getPath('userData'), 'window.json');
 
 function loadBounds() {

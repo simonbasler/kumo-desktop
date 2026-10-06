@@ -140,9 +140,22 @@ else {
     startTracking();
     app.on('activate', () => { if (win) win.show(); });
   });
-  app.on('before-quit', () => { app.isQuitting = true; saveBounds(); });
-  app.on('window-all-closed', () => {
-    // NICHT beenden - App läuft über Tray weiter
+  app.on('before-quit', () => {
+    console.log('[kumo] before-quit, isQuitting:', app.isQuitting);
+    app.isQuitting = true;
+    saveBounds();
+  });
+
+  app.on('window-all-closed', (e) => {
+    console.log('[kumo] window-all-closed event, isQuitting:', app.isQuitting);
+    // NICHT beenden - App läuft über Tray/Dock weiter
     // Nur beenden wenn explizit "Kumo beenden" im Menü gewählt wird
+  });
+
+  app.on('will-quit', (e) => {
+    if (!app.isQuitting) {
+      console.log('[kumo] Preventing quit - tray app should stay running');
+      e.preventDefault();
+    }
   });
 }

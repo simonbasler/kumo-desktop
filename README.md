@@ -61,10 +61,10 @@ Von links nach rechts:
 
 | Position | Button | Funktion |
 |----------|--------|----------|
-| 1 | **Pomodoro** (Play-Symbol) | Wechselt direkt zur Pomodoro-Ansicht |
-| 2 | **Pin** (Reißzwecke) | Fenster immer im Vordergrund halten |
-| 3 | **Einstellungen** (Zahnrad) | Öffnet Einstellungs-Dialog |
-| 4 | **Verstecken** (Auge) | Blendet Fenster aus |
+| 1 | **Pomodoro** (Uhr) | Wechselt direkt zur Pomodoro-Ansicht |
+| 2 | **Pin** (Stecknadel) | Fenster immer im Vordergrund halten |
+| 3 | **Einstellungen** (Regler) | Öffnet Einstellungs-Dialog |
+| 4 | **Verstecken** (Minus) | Blendet Fenster aus |
 
 ### Fenster bewegen
 

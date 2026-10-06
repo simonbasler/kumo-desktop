@@ -36,7 +36,7 @@ const TOMATO = ['00200','01110','11111','11111','01110'];
 /* ---------- Zustand ---------- */
 const LS = 'kumo-desktop-v1', LS_SET = 'kumo-desktop-settings-v1', LS_POMO = 'kumo-desktop-pomo-v1';
 function dayKey(d) { d = d || new Date(); return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); }
-function fresh() { const n = Date.now(); return { v:1, created:n, total:0, days:{}, pomos:{}, bond:4, mood:60, lastSeen:n, pxAcc:0, stepAcc:0, capDay:'', stepBond:0, petBond:0, pomoBond:0 }; }
+function fresh() { const n = Date.now(); return { v:1, created:n, total:0, days:{}, pomos:{}, bond:4, mood:60, lastSeen:n, pxAcc:0, stepAcc:0, capDay:'', stepBond:0, petBond:0, pomoBond:0, tomatosFed:0, fedToday:0, fedDay:'' }; }
 const DEF_SET = { focus:25, short:5, long:15, every:4, remind:50, brk:5, px:400, sound:true, notify:true };
 function readJSON(k) { try { const r = localStorage.getItem(k); return r ? JSON.parse(r) : null; } catch (e) { return null; } }
 let S = Object.assign(fresh(), readJSON(LS) || {}); const isNew = !readJSON(LS);
@@ -50,7 +50,16 @@ const LEVELS = [[0,'Scheu'],[20,'Neugierig'],[40,'Vertraut'],[60,'Freund'],[80,'
 function level() { let n = LEVELS[0][1]; for (const [t, l] of LEVELS) if (S.bond >= t) n = l; return n; }
 function today() { return S.days[dayKey()] || 0; }
 function pomosToday() { return S.pomos[dayKey()] || 0; }
-function rollCaps() { const k = dayKey(); if (S.capDay !== k) { S.capDay = k; S.stepBond = 0; S.petBond = 0; S.pomoBond = 0; } }
+function feedableTomatos() { return Math.max(0, pomosToday() - S.fedToday); }
+function feedTomato() {
+  if (feedableTomatos() <= 0) return;
+  rollCaps(); S.fedToday++; S.tomatosFed++;
+  S.bond = clamp(S.bond + 2, 0, 100); S.mood = clamp(S.mood + 3, 0, 100);
+  pet.happyUntil = Date.now() + 3000; hop(); bubble('heart', 2500); jingle([523, 659, 784]);
+  const msg = S.bond < 30 ? 'Kumo schnuppert vorsichtig an der Tomate.' : S.bond < 60 ? 'Kumo frisst die Tomate genüsslich.' : 'Kumo freut sich riesig über die Tomate!';
+  say(msg, 4000); save();
+}
+function rollCaps() { const k = dayKey(); if (S.capDay !== k) { S.capDay = k; S.stepBond = 0; S.petBond = 0; S.pomoBond = 0; } if (S.fedDay !== k) { S.fedDay = k; S.fedToday = 0; } }
 const sayEl = document.getElementById('say');
 let sayLock = 0;
 function say(m, hold) { sayEl.textContent = m; sayLock = Date.now() + (hold || 0); }
@@ -260,6 +269,7 @@ function topbar() {
     text(mmss(pomoLeft()), 7, 1, P.ink);
   } else { const d = new Date(); text(String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0'), 2, 1, P.ink); }
   const s = String(Math.min(99999, today())); text(s, W - 2 - tw(s), 1, P.ink);
+  const ft = feedableTomatos(); if (ft > 0) { const tx = W - 2 - tw(s) - 6; TOMATO.forEach((row, r) => { for (let q = 0; q < 5; q++) { const c = row[q]; if (c !== '0') px(tx + q, 1 + r, c === '2' ? P.leaf : P.heart); } }); }
 }
 function drawBubble(now) {
   if (!pet.bubble || now > pet.bubbleUntil) return;
@@ -371,6 +381,21 @@ function setPin(v) { onTop = v; pinBtn.classList.toggle('on', v); pinBtn.title =
 api.getOnTop().then(setPin); api.onOnTop(setPin);
 press('tbPin', () => { setPin(!onTop); api.setOnTop(onTop); });
 api.onCommand(c => { if (c === 'pomo-toggle') { pomoToggle(); screen = 3; } else if (c === 'pomo-reset') pomoReset(); else if (c === 'settings') openSheet(); });
+cv.addEventListener('click', e => {
+  const rect = cv.getBoundingClientRect(), scaleX = W / rect.width, scaleY = H / rect.height;
+  const x = Math.floor((e.clientX - rect.left) * scaleX), y = Math.floor((e.clientY - rect.top) * scaleY);
+  if (screen === 0) {
+    const ft = feedableTomatos(); if (ft > 0) { const s = String(Math.min(99999, today())), tx = W - 2 - tw(s) - 6;
+      if (x >= tx && x < tx + 5 && y >= 1 && y < 6) feedTomato(); }
+  } else if (screen === 3) {
+    const n = pomosToday(), ft = feedableTomatos();
+    for (let i = 0; i < Math.min(n, 5); i++) {
+      if (i >= n - ft) {
+        const tomX = 4 + i * 7;
+        if (x >= tomX && x < tomX + 5 && y >= 37 && y < 42) { feedTomato(); break; } }
+    }
+  }
+});
 
 /* ---------- Einstellungen ---------- */
 const sheet = document.getElementById('sheet');

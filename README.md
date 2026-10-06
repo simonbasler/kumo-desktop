@@ -101,8 +101,9 @@ Danach liegt in `dist/` eine `Kumo-1.0.0-arm64.dmg` (Apple Silicon) und eine x64
 
 - **Schritte:** Der Hauptprozess fragt alle 40 ms die Mausposition ab (`screen.getCursorScreenPoint`). Alle 400 px Mausweg (einstellbar) gibt es einen Schritt. Sprünge über 800 px, etwa beim Wechsel des Bildschirms, werden ignoriert. Dafür braucht es keine Bedienungshilfen-Rechte.
 - **Pausen-Erinnerung:** Nutzt die Leerlaufzeit des Systems, also Maus *und* Tastatur. Nach 50 Minuten Aktivität ohne 5 Minuten Ruhe gibt es eine Mitteilung. Machst du dann Pause, freut sich Kumo. Ignorierst du die Erinnerung mehrmals, sinkt seine Laune. Während ein Pomodoro läuft, übernimmt der Timer die Pausen.
-- **Pomodoro:** 25 / 5 / 15 Minuten, nach 4 Runden kommt eine lange Pause. Die Pause startet automatisch, die nächste Fokus-Runde startest du selbst. Jede geschaffte Runde stärkt die Freundschaft.
-- **Laune & Freundschaft:** Steigen durch Schritte, Streicheln, geschaffte Pomodoros und echte Pausen. Zu viel Streicheln nervt Kumo. Nach langer Abwesenheit schmollt es, wenn ihr euch noch nicht gut kennt. Nachts (22–6 Uhr) schläft Kumo.
+- **Pomodoro:** 25 / 5 / 15 Minuten, nach 4 Runden kommt eine lange Pause. Die Pause startet automatisch, die nächste Fokus-Runde startest du selbst. Jede geschaffte Runde erzeugt eine Tomate, die du an Kumo verfüttern kannst.
+- **Tomaten füttern:** Klick auf die Tomaten im Hauptscreen (oben rechts) oder im Pomodoro-Screen (unten). Kumo freut sich, hüpft und die Freundschaft steigt um +2 (ohne tägliches Limit). Gefütterte Tomaten verschwinden, neue entstehen durch Pomodoros.
+- **Laune & Freundschaft:** Steigen durch Schritte, Streicheln, geschaffte Pomodoros, echte Pausen und Tomaten-Füttern. Zu viel Streicheln nervt Kumo. Nach langer Abwesenheit schmollt es, wenn ihr euch noch nicht gut kennt. Nachts (22–6 Uhr) schläft Kumo.
 - **Speicher:** Alles bleibt lokal auf deinem Mac (`~/Library/Application Support/Kumo`).
 
 ## Dateien

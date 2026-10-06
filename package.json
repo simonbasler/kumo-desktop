@@ -1,7 +1,7 @@
 {
   "name": "kumo-desktop",
   "productName": "Kumo",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Kleiner Desktop-Begleiter, der Mauswege als Schritte zählt – mit Pomodoro-Timer und Pausen-Erinnerung.",
   "main": "main.js",
   "author": "Simon Basler",

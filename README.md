@@ -116,3 +116,14 @@ build/icon.png   App-Symbol
 ```
 
 Debug-Ausgabe der Mauswege: `KUMO_DEBUG=1 npm start`
+
+## Credits
+
+**Font:** Silkscreen
+**Designer:** The Silkscreen Project Authors
+**License:** SIL Open Font License 1.1
+**Source:** https://github.com/googlefonts/silkscreen
+
+## Lizenz
+
+MIT License – siehe [LICENSE](LICENSE) Datei für Details.

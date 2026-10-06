@@ -21,3 +21,6 @@ Thumbs.db
 
 # Sprites (nur lokal)
 sprites/
+
+# Gumroad prep (nur lokal)
+gumroad-prep/

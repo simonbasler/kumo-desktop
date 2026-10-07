@@ -13,7 +13,7 @@ Ein kleines Wolkenschaf, das über deinem Desktop schwebt. Jede Mausbewegung zä
 - **Apple Silicon (M1/M2/M3)**: `Kumo-1.0.0-arm64.dmg`
 - **Intel Macs**: `Kumo-1.0.0.dmg`
 
-**Installation**: DMG öffnen → Kumo in Programme-Ordner ziehen → Beim ersten Start: Rechtsklick → Öffnen
+**Installation**: DMG öffnen → Kumo in Programme-Ordner ziehen → Beim ersten Start blockiert macOS die App (nicht notarisiert): Systemeinstellungen → Datenschutz & Sicherheit → „Trotzdem öffnen“ → bestätigen
 
 ## Screenshots
 
@@ -93,7 +93,7 @@ npm start
 npm run dist
 ```
 
-Danach liegt in `dist/` eine `Kumo-1.0.0-arm64.dmg` (Apple Silicon) und eine x64-Variante. Öffnen, Kumo in den Programme-Ordner ziehen, fertig. Die App ist nur ad-hoc signiert. Weil du sie selbst gebaut hast, startet sie trotzdem ohne Warnung. Gibst du sie weiter, muss der Empfänger beim ersten Start Rechtsklick → Öffnen wählen.
+Danach liegt in `dist/` eine `Kumo-1.0.0-arm64.dmg` (Apple Silicon) und eine x64-Variante. Öffnen, Kumo in den Programme-Ordner ziehen, fertig. Die App ist nur ad-hoc signiert. Weil du sie selbst gebaut hast, startet sie trotzdem ohne Warnung. Gibst du sie weiter, muss der Empfänger sie beim ersten Start in Systemeinstellungen → Datenschutz & Sicherheit mit „Trotzdem öffnen“ freigeben (der Rechtsklick-Trick funktioniert seit macOS 15 nicht mehr).
 
 **Tipp:** Unter Systemeinstellungen → Allgemein → Anmeldeobjekte kannst du Kumo beim Login starten lassen.
 

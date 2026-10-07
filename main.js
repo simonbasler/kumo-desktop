@@ -4,6 +4,10 @@ const { app, BrowserWindow, screen, ipcMain, Notification, Tray, Menu, nativeIma
 const path = require('path');
 const fs = require('fs');
 
+// `npm start` (nicht gepackt) bekommt einen eigenen Datenordner, damit der Fortschritt der installierten App unberührt bleibt.
+// Muss vor requestSingleInstanceLock() und dem ersten getPath('userData') passieren.
+if (!app.isPackaged) app.setPath('userData', path.join(app.getPath('appData'), 'Kumo-dev'));
+
 let win = null;
 let tray = null;
 let alwaysOnTop = true;
@@ -143,7 +147,8 @@ ipcMain.on('kumo:hide', () => {
 ipcMain.handle('kumo:get-ontop', () => alwaysOnTop);
 
 /* ---------- Start ---------- */
-if (!app.requestSingleInstanceLock()) { app.quit(); }
+// Dev-Modus ohne Sperre, damit `npm start` neben der installierten App laufen kann.
+if (app.isPackaged && !app.requestSingleInstanceLock()) { app.quit(); }
 else {
   app.on('second-instance', () => { if (win) { win.show(); win.focus(); } });
 

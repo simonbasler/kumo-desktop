@@ -18,6 +18,15 @@ app.isQuitting = false;
 
 const boundsFile = () => path.join(app.getPath('userData'), 'window.json');
 
+// Sendet nur, wenn Fenster und Seite bereit sind. Beim Start oder während eines Reloads gibt es keinen Render-Frame,
+// dann wird der Tick einfach übersprungen (Electron würde sonst "Render frame was disposed" loggen).
+function sendToWindow(channel, ...args) {
+  if (!win || win.isDestroyed()) return;
+  const wc = win.webContents;
+  if (wc.isDestroyed() || wc.isLoading()) return;
+  try { wc.send(channel, ...args); } catch (e) {}
+}
+
 function loadBounds() {
   try { return JSON.parse(fs.readFileSync(boundsFile(), 'utf8')); } catch (e) { return null; }
 }
@@ -77,11 +86,11 @@ function startTracking() {
   }, 40);
   setInterval(() => {
     if (process.env.KUMO_DEBUG) console.log('[kumo] px', Math.round(acc), JSON.stringify(screen.getCursorScreenPoint()));
-    if (win && !win.isDestroyed()) win.webContents.send('kumo:mouse', Math.round(acc));
+    sendToWindow('kumo:mouse', Math.round(acc));
     acc = 0;
   }, 500);
   setInterval(() => {
-    if (win && !win.isDestroyed()) win.webContents.send('kumo:idle', powerMonitor.getSystemIdleTime());
+    sendToWindow('kumo:idle', powerMonitor.getSystemIdleTime());
   }, 1000);
 }
 
@@ -94,11 +103,11 @@ function buildMenu() {
   return Menu.buildFromTemplate([
     { label: 'Kumo zeigen / verstecken', click: toggleWindow },
     { type: 'separator' },
-    { label: pomoLabel, click: () => win && win.webContents.send('kumo:cmd', 'pomo-toggle') },
-    { label: 'Pomodoro zurücksetzen', click: () => win && win.webContents.send('kumo:cmd', 'pomo-reset') },
+    { label: pomoLabel, click: () => sendToWindow('kumo:cmd', 'pomo-toggle') },
+    { label: 'Pomodoro zurücksetzen', click: () => sendToWindow('kumo:cmd', 'pomo-reset') },
     { type: 'separator' },
     { label: 'Immer im Vordergrund', type: 'checkbox', checked: alwaysOnTop, click: (i) => setOnTop(i.checked) },
-    { label: 'Einstellungen …', click: () => { if (win) { win.show(); win.webContents.send('kumo:cmd', 'settings'); } } },
+    { label: 'Einstellungen …', click: () => { if (win) { win.show(); sendToWindow('kumo:cmd', 'settings'); } } },
     { type: 'separator' },
     { label: 'Kumo beenden', click: () => { app.isQuitting = true; app.quit(); } }
   ]);
@@ -108,7 +117,7 @@ function setOnTop(v) {
   alwaysOnTop = !!v;
   if (win) win.setAlwaysOnTop(alwaysOnTop, 'floating');
   saveBounds(); refreshMenu();
-  if (win) win.webContents.send('kumo:ontop', alwaysOnTop);
+  sendToWindow('kumo:ontop', alwaysOnTop);
 }
 function createTray() {
   const imgPath = path.join(__dirname, 'assets', 'trayTemplate.png');

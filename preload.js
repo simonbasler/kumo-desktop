@@ -11,5 +11,7 @@ contextBridge.exposeInMainWorld('kumoApi', {
   setPomoLabel: (t) => ipcRenderer.send('kumo:pomo-label', t),
   setOnTop: (v) => ipcRenderer.send('kumo:set-ontop', v),
   getOnTop: () => ipcRenderer.invoke('kumo:get-ontop'),
+  getScale: () => ipcRenderer.invoke('kumo:get-scale'),
+  setScale: (v) => ipcRenderer.send('kumo:set-scale', v),
   hide: () => ipcRenderer.send('kumo:hide')
 });

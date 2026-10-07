@@ -10,7 +10,7 @@ const api = window.kumoApi || (() => {
   setInterval(() => { mouseCbs.forEach(cb => cb(Math.round(acc))); acc = 0; }, 500);
   setInterval(() => { idleCbs.forEach(cb => cb(Math.floor((Date.now() - lastMove) / 1000))); }, 1000);
   return { onMouse: cb => mouseCbs.push(cb), onIdle: cb => idleCbs.push(cb), onCommand() {}, onOnTop() {},
-    notify: (t, b) => console.log('[Mitteilung]', t, '–', b), setTrayTitle() {}, setPomoLabel() {}, setOnTop() {}, getOnTop: async () => true, hide() {} };
+    notify: (t, b) => console.log('[Mitteilung]', t, '–', b), setTrayTitle() {}, setPomoLabel() {}, setOnTop() {}, getOnTop: async () => true, getScale: async () => 1, setScale() {}, hide() {} };
 })();
 
 /* ---------- Leinwand & Farben ---------- */
@@ -409,6 +409,7 @@ function showPage(i) {
 }
 function openSheet() { showPage(0); for (const [id, k] of Object.entries(fields)) document.getElementById(id).value = SET[k];
   document.getElementById('setPx').value = String(SET.px); document.getElementById('setSound').checked = SET.sound; document.getElementById('setNotify').checked = SET.notify;
+  api.getScale().then(v => { document.getElementById('setScale').value = String(Math.round(v * 100)); });
   statsLine(); sheet.hidden = false; }
 function statsLine() { document.getElementById('statsLine').textContent = 'Heute ' + fmt(today()) + ' Schritte · ' + pomosToday() + ' Pomodoros · seit ' + Math.round(RB.streak / 60) + ' Min. ohne Pause · ' + level(); }
 press('tbSet', openSheet);
@@ -417,6 +418,7 @@ press('sheetClose', () => { sheet.hidden = true; });
 for (const [id, k] of Object.entries(fields)) document.getElementById(id).addEventListener('change', e => {
   const el = e.target, v = clamp(Math.round(+el.value || DEF_SET[k]), +el.min, +el.max); el.value = v; SET[k] = v; saveSet();
 });
+document.getElementById('setScale').addEventListener('change', e => api.setScale(+e.target.value / 100));
 document.getElementById('setPx').addEventListener('change', e => { SET.px = +e.target.value; saveSet(); });
 document.getElementById('setSound').addEventListener('change', e => { SET.sound = e.target.checked; saveSet(); });
 document.getElementById('setNotify').addEventListener('change', e => { SET.notify = e.target.checked; saveSet(); });

@@ -12,6 +12,8 @@ let win = null;
 let tray = null;
 let alwaysOnTop = true;
 let pomoLabel = 'Pomodoro starten';
+let uiScale = 1; // UI-Skalierung: 1, .75 oder .5
+const BASE_W = 320, BASE_H = 480;
 
 // Verhindere App-Beendigung außer wenn explizit gewollt
 app.isQuitting = false;
@@ -32,12 +34,13 @@ function loadBounds() {
 }
 function saveBounds() {
   if (!win || win.isDestroyed()) return;
-  try { fs.writeFileSync(boundsFile(), JSON.stringify({ ...win.getBounds(), alwaysOnTop })); } catch (e) {}
+  try { fs.writeFileSync(boundsFile(), JSON.stringify({ ...win.getBounds(), alwaysOnTop, scale: uiScale })); } catch (e) {}
 }
 
 function createWindow() {
   const saved = loadBounds();
-  const W = 320, H = 480;
+  if (saved && [1, .75, .5].includes(saved.scale)) uiScale = saved.scale;
+  const W = Math.round(BASE_W * uiScale), H = Math.round(BASE_H * uiScale);
   const wa = screen.getPrimaryDisplay().workArea;
   let x = wa.x + wa.width - W - 24, y = wa.y + wa.height - H - 24;
   if (saved && screen.getAllDisplays().some(d => {
@@ -59,6 +62,7 @@ function createWindow() {
   if (alwaysOnTop) win.setAlwaysOnTop(true, 'floating');
   win.setVisibleOnAllWorkspaces(true, { visibleOnFullScreen: true });
   win.loadFile(path.join(__dirname, 'renderer', 'index.html'));
+  win.webContents.on('dom-ready', () => win.webContents.setZoomFactor(uiScale));
   win.on('moved', saveBounds);
 
   // KRITISCH: Verhindere dass Fenster geschlossen wird (nur verstecken!)
@@ -154,6 +158,19 @@ ipcMain.on('kumo:hide', () => {
   console.log('[kumo] Window hidden, isDestroyed:', win.isDestroyed());
 });
 ipcMain.handle('kumo:get-ontop', () => alwaysOnTop);
+ipcMain.handle('kumo:get-scale', () => uiScale);
+ipcMain.on('kumo:set-scale', (_e, v) => {
+  if (!win || win.isDestroyed() || ![1, .75, .5].includes(v) || v === uiScale) return;
+  // Unterkante und horizontale Mitte bleiben stehen, damit das Fenster nicht über den Bildschirmrand wächst.
+  const b = win.getBounds(), w = Math.round(BASE_W * v), h = Math.round(BASE_H * v);
+  const wa = screen.getDisplayMatching(b).workArea;
+  const x = Math.min(Math.max(Math.round(b.x + (b.width - w) / 2), wa.x), wa.x + wa.width - w);
+  const y = Math.min(Math.max(b.y + b.height - h, wa.y), wa.y + wa.height - h);
+  uiScale = v;
+  win.setBounds({ x, y, width: w, height: h });
+  win.webContents.setZoomFactor(v);
+  saveBounds();
+});
 
 /* ---------- Start ---------- */
 // Dev-Modus ohne Sperre, damit `npm start` neben der installierten App laufen kann.

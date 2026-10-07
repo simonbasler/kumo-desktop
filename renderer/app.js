@@ -400,11 +400,19 @@ cv.addEventListener('click', e => {
 /* ---------- Einstellungen ---------- */
 const sheet = document.getElementById('sheet');
 const fields = { setFocus:'focus', setShort:'short', setLong:'long', setEvery:'every', setRemind:'remind', setBreak:'brk' };
-function openSheet() { for (const [id, k] of Object.entries(fields)) document.getElementById(id).value = SET[k];
+const PAGES = ['Pomodoro', 'Allgemein']; let page = 0;
+function showPage(i) {
+  page = (i + PAGES.length) % PAGES.length;
+  PAGES.forEach((_, n) => { document.getElementById('page' + n).hidden = n !== page; });
+  document.getElementById('pgLbl').textContent = PAGES[page] + ' · ' + (page + 1) + '/' + PAGES.length;
+  document.querySelector('.scroll').scrollTop = 0;
+}
+function openSheet() { showPage(0); for (const [id, k] of Object.entries(fields)) document.getElementById(id).value = SET[k];
   document.getElementById('setPx').value = String(SET.px); document.getElementById('setSound').checked = SET.sound; document.getElementById('setNotify').checked = SET.notify;
   statsLine(); sheet.hidden = false; }
 function statsLine() { document.getElementById('statsLine').textContent = 'Heute ' + fmt(today()) + ' Schritte · ' + pomosToday() + ' Pomodoros · seit ' + Math.round(RB.streak / 60) + ' Min. ohne Pause · ' + level(); }
 press('tbSet', openSheet);
+press('pgPrev', () => showPage(page - 1)); press('pgNext', () => showPage(page + 1));
 press('sheetClose', () => { sheet.hidden = true; });
 for (const [id, k] of Object.entries(fields)) document.getElementById(id).addEventListener('change', e => {
   const el = e.target, v = clamp(Math.round(+el.value || DEF_SET[k]), +el.min, +el.max); el.value = v; SET[k] = v; saveSet();

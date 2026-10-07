@@ -62,10 +62,12 @@ html,body{margin:0;height:100%;background:transparent;overflow:hidden;font-famil
 /* ---------- Einstellungen ---------- */
 .sheet{position:absolute;inset:10px 8px;border-radius:16px;background:var(--sheet);color:var(--sheet-fg);box-shadow:0 0 0 1px var(--sheet-line),0 12px 30px rgba(0,0,0,.35);display:flex;flex-direction:column;-webkit-app-region:no-drag;user-select:text}
 .sheet header{display:flex;align-items:center;justify-content:space-between;padding:12px 10px 6px 16px;-webkit-app-region:drag}
-.sheet header .ib{color:var(--sheet-muted)}
-.sheet header .ib:hover{background:var(--sheet-line);color:var(--sheet-fg)}
+.sheet header .ib,.pager .ib{color:var(--sheet-muted)}
+.sheet header .ib:hover,.pager .ib:hover{background:var(--sheet-line);color:var(--sheet-fg)}
+.pager{display:flex;align-items:center;justify-content:space-between;padding:4px 10px 8px;border-top:1px solid var(--sheet-line);color:var(--sheet-muted);font-size:12px;letter-spacing:.04em}
+.page{display:flex;flex-direction:column;gap:8px}
 .sheet h2{margin:0;font-family:var(--display);font-weight:400;font-size:14px;letter-spacing:.08em}
-.scroll{overflow:auto;padding:0 16px 16px;display:flex;flex-direction:column;gap:8px}
+.scroll{flex:1;min-height:0;overflow:auto;padding:0 16px 12px;display:flex;flex-direction:column}
 .sheet h3{margin:10px 0 0;font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--sheet-muted)}
 .f{display:grid;grid-template-columns:minmax(0,1fr) 60px 74px;align-items:center;gap:8px}
 .f em{font-style:normal;color:var(--sheet-muted);font-size:12px;min-width:0}
@@ -76,7 +78,7 @@ html,body{margin:0;height:100%;background:transparent;overflow:hidden;font-famil
 .btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-fg)}
 .btn:focus-visible,.f input:focus-visible,.f select:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
 #resetBox{margin-top:8px}
-.confirm{display:flex;flex-direction:column;gap:8px;border:1px solid var(--warn);border-radius:10px;padding:10px}
+.confirm{position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;justify-content:center;gap:12px;box-sizing:border-box;border:1px solid var(--warn);border-radius:16px;background:var(--sheet);padding:24px}
 .confirm p{margin:0}
 .confirm .row{display:flex;gap:6px;flex-wrap:wrap}
 .stats{margin:6px 0 0;color:var(--sheet-muted);font-size:12px;font-variant-numeric:tabular-nums}

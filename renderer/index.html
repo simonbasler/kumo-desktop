@@ -44,6 +44,7 @@
     <section class="sheet" id="sheet" hidden aria-label="Einstellungen">
       <header><h2>Einstellungen</h2><button class="ib" id="sheetClose" title="Schließen"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></button></header>
       <div class="scroll">
+       <div class="page" id="page0">
         <h3>Pomodoro</h3>
         <label class="f"><span>Fokus</span><input type="number" id="setFocus" min="5" max="90" step="5"><em>Min.</em></label>
         <label class="f"><span>Kurze Pause</span><input type="number" id="setShort" min="1" max="30"><em>Min.</em></label>
@@ -52,6 +53,8 @@
         <h3>Pausen-Erinnerung</h3>
         <label class="f"><span>Erinnern nach</span><input type="number" id="setRemind" min="15" max="180" step="5"><em>Min. aktiv</em></label>
         <label class="f"><span>Als Pause zählt</span><input type="number" id="setBreak" min="2" max="30"><em>Min. Ruhe</em></label>
+       </div>
+       <div class="page" id="page1" hidden>
         <h3>Schritte</h3>
         <label class="f"><span>Mausweg pro Schritt</span>
           <select id="setPx"><option value="250">kurz (250 px)</option><option value="400">normal (400 px)</option><option value="700">lang (700 px)</option></select></label>
@@ -60,7 +63,13 @@
         <label class="c"><input type="checkbox" id="setNotify"> macOS-Mitteilungen</label>
         <div id="resetBox"><button class="btn" id="resetBtn">Neu anfangen</button></div>
         <p class="stats" id="statsLine"></p>
+       </div>
       </div>
+      <footer class="pager">
+        <button class="ib" id="pgPrev" title="Vorherige Seite"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3L5 8l5 5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <span id="pgLbl">Pomodoro</span>
+        <button class="ib" id="pgNext" title="Nächste Seite"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      </footer>
     </section>
   </div>
 <script src="app.js"></script>
